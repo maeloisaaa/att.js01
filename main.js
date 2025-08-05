@@ -1,22 +1,9 @@
 // main.js
-
-// 1. Olá mundo! no console
 console.log('Olá mundo!');
-
-// 2. Acrescentando ao código main.js com as seguintes informações.
-// Criando um novo elemento <h1>
 let novoElemento = document.createElement('h1');
-
-// Alterando o conteúdo de texto do elemento
 novoElemento.innerText = 'Hello, World! English! (Inglês) Ok?!';
-
-// Selecionando o elemento body
 let elementoBody = document.body;
-
-// Colocando o novo elemento no body
 elementoBody.appendChild(novoElemento);
-
-// 3. Deixando bonito agora
 novoElemento.style.backgroundColor = 'blue';
 novoElemento.style.color = 'yellow';
 novoElemento.style.padding = '10px 20px';
@@ -24,58 +11,37 @@ novoElemento.style.borderRadius = '8px';
 novoElemento.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
 novoElemento.style.fontSize = '2em';
 novoElemento.style.fontWeight = 'bold';
-
-
-// 4. Usando a sua criatividade (com um toque de IA!)
-// Vamos criar um contador simples que muda a cor do texto ao clicar
-// e mostra uma mensagem.
-
-// Criando um novo elemento div para o conteúdo criativo
 let creativeBox = document.createElement('div');
-creativeBox.className = 'creative-box'; // Adiciona uma classe para estilização
-
+creativeBox.className = 'creative-box';
 let creativeTitle = document.createElement('h2');
 creativeTitle.innerText = 'Contador Interativo';
 creativeTitle.style.color = '#333';
 creativeBox.appendChild(creativeTitle);
-
 let counterDisplay = document.createElement('p');
 counterDisplay.innerText = 'Cliques: 0';
 counterDisplay.style.fontSize = '1.5em';
 counterDisplay.style.fontWeight = 'bold';
 counterDisplay.style.color = '#555';
 creativeBox.appendChild(counterDisplay);
-
 let clickButton = document.createElement('button');
 clickButton.innerText = 'Clique-me!';
 creativeBox.appendChild(clickButton);
-
-// Adicionando a caixa criativa ao body
 elementoBody.appendChild(creativeBox);
-
 let clickCount = 0;
-const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF']; // Cores para o texto
-
-// Função para exibir mensagens na tela (substituindo alert)
+const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF'];
 function showMessage(message) {
   const messageBox = document.getElementById('messageBox');
   messageBox.innerText = message;
-  messageBox.style.display = 'block'; // Mostra a caixa de mensagem
+  messageBox.style.display = 'block';
   setTimeout(() => {
-    messageBox.style.display = 'none'; // Esconde a caixa de mensagem após 3 segundos
+    messageBox.style.display = 'none';
   }, 3000);
 }
-
-// Adicionando um evento de clique ao botão
 clickButton.addEventListener('click', function() {
   clickCount++;
   counterDisplay.innerText = `Cliques: ${clickCount}`;
-
-  // Muda a cor do texto do contador a cada clique
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
   counterDisplay.style.color = randomColor;
-
-  // Mostra uma mensagem na tela
   if (clickCount === 1) {
     showMessage('Primeiro clique! Bem-vindo(a)!');
   } else if (clickCount % 5 === 0) {
@@ -84,6 +50,52 @@ clickButton.addEventListener('click', function() {
     showMessage('Mais um clique!');
   }
 });
-
-// Exemplo de como você pode usar o console.log para depuração
+function injectStarStyles() {
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes fallAndFade {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(200px) scale(0.5);
+      }
+    }
+    .star {
+      position: absolute;
+      background-color: yellow;
+      border-radius: 50%;
+      animation: fallAndFade 2s forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  `;
+  document.head.appendChild(style);
+}
+injectStarStyles();
+function createStar(x, y) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  const size = Math.random() * 5 + 5;
+  star.style.width = `${size}px`;
+  star.style.height = `${size}px`;
+  star.style.left = `${x - size / 2}px`;
+  star.style.top = `${y - size / 2}px`;
+  document.body.appendChild(star);
+  star.addEventListener('animationend', () => {
+    star.remove();
+  });
+}
+document.addEventListener('click', function(event) {
+  const randomBackgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+  document.body.style.backgroundColor = randomBackgroundColor;
+  const numberOfStars = 15;
+  for (let i = 0; i < numberOfStars; i++) {
+    const offsetX = (Math.random() - 0.5) * 100;
+    const offsetY = (Math.random() - 0.5) * 100;
+    createStar(event.clientX + offsetX, event.clientY + offsetY);
+  }
+});
 console.log('Script main.js carregado e executado.');
